@@ -1,0 +1,42 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --https --ssl-cert localhost+2.pem --ssl-key localhost+2-key.pem --host 0.0.0.0",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.7",
+    "@nuxt/eslint": "1.4.1",
+    "@nuxt/image": "1.10.0",
+    "@nuxt/ui": "3.1.2",
+    "@pinia/nuxt": "0.11.0",
+    "@unhead/vue": "^2.0.10",
+    "@vueuse/core": "^13.2.0",
+    "@vueuse/nuxt": "13.2.0",
+    "argon2": "^0.43.0",
+    "drizzle-orm": "^0.43.1",
+    "eslint": "^9.27.0",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
+    "nuxt": "^3.17.4",
+    "pdfmake": "^0.2.20",
+    "pinia": "^3.0.2",
+    "typescript": "^5.8.3",
+    "vue": "^3.5.14",
+    "vue-router": "^4.5.1",
+    "zod": "^3.25.28"
+  },
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.2.3",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/pdfmake": "^0.2.11",
+    "drizzle-kit": "^0.31.1",
+    "tsx": "^4.19.4"
+  }
+}
