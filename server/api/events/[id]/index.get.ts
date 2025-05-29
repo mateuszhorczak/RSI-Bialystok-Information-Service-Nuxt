@@ -1,11 +1,11 @@
 import { defineEventHandler, getQuery } from 'h3'
-import { openConnection } from "~/server/db";
-import { events } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
+import { eq } from 'drizzle-orm'
+import { openConnection } from '~/server/db'
+import { events } from '~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
   const baseUrl = getRequestURL(event).origin
-  const id = getRouterParam(event, "id")
+  const id = getRouterParam(event, 'id')
   const idNum = parseInt(id as string, 10)
 
   if (!idNum) {
@@ -30,7 +30,6 @@ export default defineEventHandler(async (event) => {
       .from(events)
       .where(eq(events.id, idNum))
 
-
     const links = [
       { rel: 'self', href: `${baseUrl}/api/events?id=1`, method: 'GET' },
       { rel: 'update', href: `${baseUrl}/api/events`, method: 'PUT' },
@@ -38,7 +37,7 @@ export default defineEventHandler(async (event) => {
       { rel: 'create', href: `${baseUrl}/api/events`, method: 'POST' },
       { rel: 'all-events', href: `${baseUrl}/api/events`, method: 'GET' },
       { rel: 'by-date', href: `${baseUrl}/api/events/by-date?date=27.05.2025`, method: 'GET' },
-      { rel: 'by-week', href: `${baseUrl}/api/events/by-week?week=22&year=2025`, method: 'GET' }
+      { rel: 'by-week', href: `${baseUrl}/api/events/by-week?week=22&year=2025`, method: 'GET' },
     ]
 
     return {
@@ -47,12 +46,12 @@ export default defineEventHandler(async (event) => {
       _meta: {
         searchQuery: id,
         count: 1,
-        pattern: `%${id}%`
-      }
+        pattern: `%${id}%`,
+      },
     }
   }
   catch (error) {
-    console.error("Error processing request:", error);
+    console.error('Error processing request:', error)
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',

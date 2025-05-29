@@ -1,11 +1,11 @@
 import { defineEventHandler } from 'h3'
-import type { Event } from '~/types'
-import { openConnection } from "~/server/db"
 import { eq } from 'drizzle-orm'
+import type { Event } from '~/types'
+import { openConnection } from '~/server/db'
 import { events } from '~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, "id")
+  const id = getRouterParam(event, 'id')
   const idNum = parseInt(id as string, 10)
 
   if (!idNum) {
@@ -28,10 +28,10 @@ export default defineEventHandler(async (event) => {
     const db = openConnection()
     await db.update(events)
       .set(eventToUpdate)
-      .where(eq(events.id, idNum));
+      .where(eq(events.id, idNum))
   }
   catch (error) {
-    console.error("Error processing request:", error);
+    console.error('Error processing request:', error)
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',

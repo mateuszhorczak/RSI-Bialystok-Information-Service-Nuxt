@@ -7,6 +7,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
   ],
+
+  ssr: false,
   devtools: { enabled: true },
 
   app: {
@@ -16,21 +18,24 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+
+  colorMode: {
+    preference: 'light',
+  },
+
+  runtimeConfig: {
+    jwtSecret: '',
+  },
   compatibilityDate: '2024-11-01',
+  nitro: {
+    experimental: {
+      openAPI: true,
+    },
+  },
 
   eslint: {
     config: {
       stylistic: true,
     },
   },
-
-  colorMode: {
-    preference: 'light'
-  },
-
-  runtimeConfig: {
-    jwtSecret: ''
-  },
-
-  ssr: false,
 })

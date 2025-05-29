@@ -3,7 +3,6 @@ import { type CalendarDate, DateFormatter, getLocalTimeZone } from '@internation
 
 const date = defineModel<CalendarDate>('date')
 
-
 const df = new DateFormatter('pl-PL', {
   dateStyle: 'medium',
 })

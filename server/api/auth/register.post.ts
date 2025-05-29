@@ -1,6 +1,6 @@
+import argon2 from 'argon2'
 import { openConnection } from '~/server/db'
 import { users } from '~/server/db/schema'
-import argon2 from 'argon2'
 
 export default defineEventHandler(async (event) => {
   const db = openConnection()
@@ -50,11 +50,11 @@ export default defineEventHandler(async (event) => {
     setResponseStatus(event, 201)
     return {
       success: true,
-      data: userWithoutPassword
+      data: userWithoutPassword,
     }
-
-  } catch (error) {
-    console.error("Registration error:", error)
+  }
+  catch (error) {
+    console.error('Registration error:', error)
 
     // @ts-expect-error type error silence
     if (error.statusCode) {

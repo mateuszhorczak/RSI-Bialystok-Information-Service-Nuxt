@@ -2,7 +2,7 @@
 import { CalendarDate } from '@internationalized/date'
 
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
 })
 
 const eventStore = useEventStore()

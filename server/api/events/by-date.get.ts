@@ -29,14 +29,13 @@ export default defineEventHandler(async (event) => {
       .from(events)
       .where(eq(events.date, date))
 
-
     const encodedDate = encodeURIComponent(date)
     const links = [
       { rel: 'self', href: `${baseUrl}/api/events/by-date?date=${encodedDate}`, method: 'GET' },
       { rel: 'create', href: `${baseUrl}/api/events`, method: 'POST' },
       { rel: 'all-events', href: `${baseUrl}/api/events`, method: 'GET' },
       { rel: 'by-name', href: `${baseUrl}/api/events/by-name?name=event`, method: 'GET' },
-      { rel: 'by-week', href: `${baseUrl}/api/events/by-week?week=22&year=2025`, method: 'GET' }
+      { rel: 'by-week', href: `${baseUrl}/api/events/by-week?week=22&year=2025`, method: 'GET' },
     ]
 
     return {
@@ -44,12 +43,12 @@ export default defineEventHandler(async (event) => {
       links,
       _meta: {
         date,
-        count: result.length
-      }
+        count: result.length,
+      },
     }
   }
   catch (error) {
-    console.error("Error processing request:", error);
+    console.error('Error processing request:', error)
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',

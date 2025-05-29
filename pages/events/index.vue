@@ -1,8 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
 })
-
 
 const eventStore = useEventStore()
 await eventStore.getEventsByName('')

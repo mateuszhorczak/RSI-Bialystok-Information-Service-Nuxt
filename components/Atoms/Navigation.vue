@@ -25,16 +25,16 @@ const items = ref<NavigationMenuItem[]>([
       icon: 'i-mdi-text-box-search',
       to: '/events/find',
     },
-      {
-        label: 'po dacie',
-        icon: 'i-mdi-calendar-filter',
-        to: '/events/find/by-date',
-      },
-      {
-        label: 'po tygodniu',
-        icon: 'i-mdi-calendar-week',
-        to: '/events/find/by-week',
-      }],
+    {
+      label: 'po dacie',
+      icon: 'i-mdi-calendar-filter',
+      to: '/events/find/by-date',
+    },
+    {
+      label: 'po tygodniu',
+      icon: 'i-mdi-calendar-week',
+      to: '/events/find/by-week',
+    }],
   },
   {
     label: 'Stwórz',
@@ -100,9 +100,9 @@ watchEffect(() => {
 <template>
   <div class="flex">
     <UNavigationMenu
-        :items="items"
-        highlight
-        class="mx-auto mb-8"
+      :items="items"
+      highlight
+      class="mx-auto mb-8"
     />
   </div>
 </template>

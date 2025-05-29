@@ -1,63 +1,64 @@
-import { useLocalStorage } from "@vueuse/core";
-import type { User, NewUser, UserAuthentication } from "~/types";
+import { useLocalStorage } from '@vueuse/core'
+import type { User, NewUser, UserAuthentication } from '~/types'
 
 const emptyUser: User = {
   id: 0,
-  username: "",
-  email: "",
-};
+  username: '',
+  email: '',
+}
 
-export const useAuthStore = defineStore("auth", () => {
-  const token = useLocalStorage("auth: token", "");
-  const user = useLocalStorage("auth: [[user]]", emptyUser);
-
+export const useAuthStore = defineStore('auth', () => {
+  const token = useLocalStorage('auth: token', '')
+  const user = useLocalStorage('auth: [[user]]', emptyUser)
 
   const login = async (userAuth: UserAuthentication) => {
     try {
-      const data = await $fetch<{ token: string; user: User }>("/api/auth/login", {
-        method: "POST",
+      const data = await $fetch<{ token: string, user: User }>('/api/auth/login', {
+        method: 'POST',
         body: userAuth,
-      });
+      })
 
-      token.value = data.token;
-      user.value = data.user;
+      token.value = data.token
+      user.value = data.user
 
-      return { success: true, data };
-    } catch (error) {
+      return { success: true, data }
+    }
+    catch (error) {
       return {
         success: false,
         // @ts-expect-error type error silence
-        error: error.data?.statusMessage || error.message
-      };
+        error: error.data?.statusMessage || error.message,
+      }
     }
-  };
+  }
 
   const register = async (user: NewUser) => {
     try {
-      const response = await $fetch("/api/auth/register", {
-        method: "POST",
+      const response = await $fetch('/api/auth/register', {
+        method: 'POST',
         body: user,
       })
 
       return {
         success: true,
-        data: response.data
+        data: response.data,
       }
-    } catch (error) {
+    }
+    catch (error) {
       return {
         success: false,
         // @ts-expect-error type error silence
-        error: error.data?.statusMessage || error.message
+        error: error.data?.statusMessage || error.message,
       }
     }
   }
 
   const logout = () => {
-    token.value = "";
-    user.value = emptyUser;
-  };
+    token.value = ''
+    user.value = emptyUser
+  }
 
-  const isLoggedIn = computed(() => token.value !== "");
+  const isLoggedIn = computed(() => token.value !== '')
 
   return {
     login,
@@ -66,9 +67,9 @@ export const useAuthStore = defineStore("auth", () => {
     isLoggedIn,
     user,
     token,
-  };
-});
+  }
+})
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot));
+  import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot))
 }

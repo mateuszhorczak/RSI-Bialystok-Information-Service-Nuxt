@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
       { rel: 'create', href: `${baseUrl}/api/events`, method: 'POST' },
       { rel: 'all-events', href: `${baseUrl}/api/events`, method: 'GET' },
       { rel: 'by-date', href: `${baseUrl}/api/events/by-date?date=27.05.2025`, method: 'GET' },
-      { rel: 'by-week', href: `${baseUrl}/api/events/by-week?week=22&year=2025`, method: 'GET' }
+      { rel: 'by-week', href: `${baseUrl}/api/events/by-week?week=22&year=2025`, method: 'GET' },
     ]
 
     return {
@@ -38,12 +38,12 @@ export default defineEventHandler(async (event) => {
       _meta: {
         searchQuery: name,
         count: result.length,
-        pattern: `%${name}%`
-      }
+        pattern: `%${name}%`,
+      },
     }
   }
   catch (error) {
-    console.error("Error processing request:", error)
+    console.error('Error processing request:', error)
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',

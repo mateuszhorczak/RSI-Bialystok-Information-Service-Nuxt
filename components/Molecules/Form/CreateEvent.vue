@@ -82,7 +82,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       label="Data"
       name="event-date"
     >
-      <AtomsButtonCalendar v-model:date="date" class="w-full" />
+      <AtomsButtonCalendar
+        v-model:date="date"
+        class="w-full"
+      />
     </UFormField>
     <AtomsButtonContained
       icon="i-mdi-calendar-plus"

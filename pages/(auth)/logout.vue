@@ -5,7 +5,7 @@ const toast = useToast()
 toast.add({
   title: 'Poprawnie wylogowano',
   color: 'success',
-  icon: 'i-mdi-check-circle'
+  icon: 'i-mdi-check-circle',
 })
 const router = useRouter()
 await router.push('/login')

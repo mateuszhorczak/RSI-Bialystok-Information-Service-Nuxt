@@ -5,7 +5,7 @@ export default defineEventHandler((event) => {
   console.log('[Request]', {
     method: event.node.req.method,
     url: event.node.req.url,
-    headers: event.node.req.headers
+    headers: event.node.req.headers,
   })
 
   // Hook na zakończenie odpowiedzi
@@ -13,7 +13,7 @@ export default defineEventHandler((event) => {
     const duration = Date.now() - start
     console.log('[Response]', {
       status: event.node.res.statusCode,
-      time: `${duration}ms`
+      time: `${duration}ms`,
     })
   })
 })
