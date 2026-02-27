@@ -5,9 +5,9 @@
   <AtomsHeading>
     Białostocki serwis informacyjny
   </AtomsHeading>
-  <NuxtImg
+  <img
     src="/images/bialystok.jpg"
     class="shadow-xl rounded-xl mt-8"
     alt="bialystok"
-  />
+  >
 </template>
