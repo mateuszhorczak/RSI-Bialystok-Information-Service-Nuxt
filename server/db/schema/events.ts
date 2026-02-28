@@ -1,10 +1,12 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { relations } from 'drizzle-orm'
+import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { users } from './'
 
 export const events = sqliteTable('events', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  userId: integer('user_id').notNull().references(() => users.id),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id),
   name: text('name').notNull(),
   type: text('type').notNull(),
   date: text('date').notNull(),
@@ -15,7 +17,7 @@ export const events = sqliteTable('events', {
   year: integer(),
 })
 
-export const eventsRelations = relations(events, ({ one, many }) => ({
+export const eventsRelations = relations(events, ({ one }) => ({
   user: one(users, {
     fields: [events.userId],
     references: [users.id],

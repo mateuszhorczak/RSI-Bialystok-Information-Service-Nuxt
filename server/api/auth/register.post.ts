@@ -1,15 +1,15 @@
 import argon2 from 'argon2'
-import { openConnection } from '~/server/db'
-import { users } from '~/server/db/schema'
+import { openConnection } from '#server/db'
+import { users } from '#server/db/schema'
 
 export default defineEventHandler(async (event) => {
   const db = openConnection()
   const body = await readBody(event)
 
   try {
-    if (!body.username || !body.password || !body.email) {
+    if (!(body.username && body.password && body.email)) {
       throw createError({
-        statusCode: 400,
+        statusCode: StatusCodes.BAD_REQUEST,
         statusMessage: 'Wszystkie pola są wymagane!',
       })
     }
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
     if (existingUser) {
       throw createError({
-        statusCode: 409,
+        statusCode: StatusCodes.CONFLICT,
         statusMessage: 'Nazwa użytkownika jest zajęta.',
       })
     }
@@ -31,29 +31,31 @@ export default defineEventHandler(async (event) => {
 
     if (existingEmail) {
       throw createError({
-        statusCode: 409,
+        statusCode: StatusCodes.CONFLICT,
         statusMessage: 'Podany adres email ma już przypisane konto.',
       })
     }
 
     const hashedPassword = await argon2.hash(body.password)
 
-    const [newUser] = await db.insert(users).values({
-      username: body.username,
-      password: hashedPassword,
-      email: body.email,
-      dateCreation: new Date().toISOString(),
-    }).returning()
+    const [newUser] = await db
+      .insert(users)
+      .values({
+        username: body.username,
+        password: hashedPassword,
+        email: body.email,
+        dateCreation: new Date().toISOString(),
+      })
+      .returning()
 
-    const { password, ...userWithoutPassword } = newUser
+    const userWithoutPassword = omit(newUser, ['password'])
 
-    setResponseStatus(event, 201)
+    setResponseStatus(event, StatusCodes.CREATED)
     return {
       success: true,
       data: userWithoutPassword,
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Registration error:', error)
 
     // @ts-expect-error type error silence
@@ -62,7 +64,7 @@ export default defineEventHandler(async (event) => {
     }
 
     throw createError({
-      statusCode: 500,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       statusMessage: 'Internal server error',
     })
   }

@@ -1,7 +1,7 @@
-import { defineEventHandler, getQuery } from 'h3'
 import { sql } from 'drizzle-orm'
-import { events } from '~/server/db/schema'
-import { openConnection } from '~/server/db'
+import { defineEventHandler, getQuery } from 'h3'
+import { openConnection } from '#server/db'
+import { events } from '#server/db/schema'
 
 export default defineEventHandler(async (event) => {
   const baseUrl = getRequestURL(event).origin
@@ -10,26 +10,39 @@ export default defineEventHandler(async (event) => {
 
   try {
     const db = openConnection()
-    const result = await db.select({
-      id: events.id,
-      userId: events.userId,
-      name: events.name,
-      type: events.type,
-      date: events.date,
-      description: events.description,
-      dateCreation: events.dateCreation,
-    })
+    const result = await db
+      .select({
+        id: events.id,
+        userId: events.userId,
+        name: events.name,
+        type: events.type,
+        date: events.date,
+        description: events.description,
+        dateCreation: events.dateCreation,
+      })
       .from(events)
-      .where(sql`${events.name} LIKE ${'%' + name + '%'}`)
+      .where(sql`${events.name} LIKE ${`%${name}%`}`)
 
     const encodedName = encodeURIComponent(name)
 
     const links = [
-      { rel: 'self', href: `${baseUrl}/api/events/by-name?name=${encodedName}`, method: 'GET' },
+      {
+        rel: 'self',
+        href: `${baseUrl}/api/events/by-name?name=${encodedName}`,
+        method: 'GET',
+      },
       { rel: 'create', href: `${baseUrl}/api/events`, method: 'POST' },
       { rel: 'all-events', href: `${baseUrl}/api/events`, method: 'GET' },
-      { rel: 'by-date', href: `${baseUrl}/api/events/by-date?date=27.05.2025`, method: 'GET' },
-      { rel: 'by-week', href: `${baseUrl}/api/events/by-week?week=22&year=2025`, method: 'GET' },
+      {
+        rel: 'by-date',
+        href: `${baseUrl}/api/events/by-date?date=27.05.2025`,
+        method: 'GET',
+      },
+      {
+        rel: 'by-week',
+        href: `${baseUrl}/api/events/by-week?week=22&year=2025`,
+        method: 'GET',
+      },
     ]
 
     return {
@@ -41,11 +54,10 @@ export default defineEventHandler(async (event) => {
         pattern: `%${name}%`,
       },
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Error processing request:', error)
     throw createError({
-      statusCode: 500,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       statusMessage: 'Internal Server Error',
     })
   }

@@ -1,17 +1,17 @@
-import { eq } from 'drizzle-orm'
 import argon2 from 'argon2'
-import { generateJwtToken } from '~/server/jwtModule'
-import { users } from '~/server/db/schema'
-import { openConnection } from '~/server/db'
+import { eq } from 'drizzle-orm'
+import { openConnection } from '#server/db'
+import { users } from '#server/db/schema'
+import { generateJwtToken } from '#server/jwtModule'
 
 export default defineEventHandler(async (event) => {
   const db = openConnection()
   const body = await readBody(event)
 
   try {
-    if (!body.username || !body.password) {
+    if (!(body.username && body.password)) {
       throw createError({
-        statusCode: 400,
+        statusCode: StatusCodes.BAD_REQUEST,
         statusMessage: 'Wymagane nazwa użytkownika i hasło!',
       })
     }
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
 
     if (!user) {
       throw createError({
-        statusCode: 404,
+        statusCode: StatusCodes.NOT_FOUND,
         statusMessage: 'Użytkownik o podanej nazwie nie istnieje.',
       })
     }
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
     const isMatch = await argon2.verify(user.password, body.password)
     if (!isMatch) {
       throw createError({
-        statusCode: 401,
+        statusCode: StatusCodes.UNAUTHORIZED,
         statusMessage: 'Nieprawidłowe hasło',
       })
     }
@@ -41,8 +41,7 @@ export default defineEventHandler(async (event) => {
       token: generateJwtToken(event, userWithoutPassword),
       user: userWithoutPassword,
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Login error:', error)
 
     // @ts-expect-error type error silence
@@ -51,7 +50,7 @@ export default defineEventHandler(async (event) => {
     }
 
     throw createError({
-      statusCode: 500,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       statusMessage: 'Internal server error',
     })
   }

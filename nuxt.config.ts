@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
   ],
 
-  ssr: false,
+  ssr: true,
   devtools: { enabled: true },
 
   app: {
@@ -26,6 +26,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     jwtSecret: '',
   },
+
+  experimental: {
+    cookieStore: true,
+  },
+
   compatibilityDate: '2024-11-01',
   nitro: {
     experimental: {

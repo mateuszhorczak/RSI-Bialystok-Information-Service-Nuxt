@@ -1,8 +1,11 @@
+import type { H3Event } from 'h3'
 import jwt from 'jsonwebtoken'
 import type { JwtPayload } from 'jwt-decode'
 import { jwtDecode } from 'jwt-decode'
 
-export function generateJwtToken(event: any, payload: any) {
+const SECOND = 1000
+
+export function generateJwtToken(event: H3Event, payload: UserWithoutPassword) {
   const config = useRuntimeConfig(event)
   return jwt.sign(payload, config.jwtSecret, { expiresIn: '1d' })
 }
@@ -13,10 +16,9 @@ export function isTokenExpired(token: string): boolean {
 
     if (!decoded.exp) return true
 
-    const currentTime = Math.floor(Date.now() / 1000)
+    const currentTime = Math.floor(Date.now() / SECOND)
     return decoded.exp < currentTime
-  }
-  catch (e) {
+  } catch (e) {
     console.error('Invalid token', e)
     return true
   }
