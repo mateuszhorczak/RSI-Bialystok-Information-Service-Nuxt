@@ -18,8 +18,7 @@ export function isTokenExpired(token: string): boolean {
 
     const currentTime = Math.floor(Date.now() / SECOND)
     return decoded.exp < currentTime
-  }
-  catch (e) {
+  } catch (e) {
     console.error('Invalid token', e)
     return true
   }

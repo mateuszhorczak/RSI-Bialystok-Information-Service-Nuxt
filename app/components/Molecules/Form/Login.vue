@@ -49,8 +49,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         icon: 'i-mdi-check-circle',
       })
       await router.push('/')
-    }
-    else if (error) {
+    } else if (error) {
       toast.add({
         title: 'Logowanie zakończone niepowodzeniem',
         description: error,
@@ -58,8 +57,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         icon: 'i-mdi-exclamation-thick',
       })
     }
-  }
-  catch (error) {
+  } catch (error) {
     toast.add({
       title: 'Błąd logowania',
       description: 'Wystąpił nieoczekiwany błąd',
@@ -67,8 +65,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       icon: 'i-mdi-exclamation-thick',
     })
     console.error(error)
-  }
-  finally {
+  } finally {
     isSubmitting.value = false
   }
 }

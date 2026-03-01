@@ -62,8 +62,7 @@ export default defineEventHandler(async (event) => {
         count: result.length,
       },
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Error processing request:', error)
     throw createError({
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,

@@ -29,7 +29,7 @@ const schema = z
       ),
     passwordRepeated: z.string({ message: 'Wymagane' }).trim().nonempty(),
   })
-  .refine(data => data.password === data.passwordRepeated, {
+  .refine((data) => data.password === data.passwordRepeated, {
     message: 'Hasła nie są identyczne',
     path: ['passwordRepeated'],
   })
@@ -60,8 +60,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         icon: 'i-mdi-check-circle-outline',
       })
       await router.push('/login')
-    }
-    else if (error) {
+    } else if (error) {
       toast.add({
         title: 'Rejestracja zakończona niepowodzeniem',
         description: error,
@@ -69,8 +68,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         icon: 'i-mdi-exclamation-thick',
       })
     }
-  }
-  catch (error) {
+  } catch (error) {
     toast.add({
       title: 'Błąd rejestracji',
       description: 'Wystąpił nieoczekiwany błąd',
@@ -78,8 +76,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       icon: 'i-mdi-exclamation-thick',
     })
     console.error(error)
-  }
-  finally {
+  } finally {
     isSubmitting.value = false
   }
 }

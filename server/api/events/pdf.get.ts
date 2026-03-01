@@ -109,7 +109,7 @@ export default defineEventHandler(async (event) => {
                 { text: 'Description', style: 'tableHeader' },
                 { text: 'Date', style: 'tableHeader' },
               ],
-              ...eventsData.map(event => [
+              ...eventsData.map((event) => [
                 event.id.toString(),
                 event.name,
                 event.type,
@@ -167,7 +167,7 @@ export default defineEventHandler(async (event) => {
     const pdf = pdfMake
       .createPdf(docDefinition)
       .getBuffer()
-      .catch(err => console.error(err))
+      .catch((err) => console.error(err))
 
     setResponseHeaders(event, {
       'Content-Type': 'application/pdf',
@@ -175,8 +175,7 @@ export default defineEventHandler(async (event) => {
     })
 
     return pdf
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Error generating PDF:', error)
     throw createError({
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,

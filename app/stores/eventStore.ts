@@ -16,8 +16,7 @@ export const useEventStore = defineStore('eventStore', () => {
           ...event,
         },
       })
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -29,8 +28,7 @@ export const useEventStore = defineStore('eventStore', () => {
         method: 'PUT',
         body: event,
       })
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -41,8 +39,7 @@ export const useEventStore = defineStore('eventStore', () => {
         headers: { authorization: `Bearer ${authStore.token}` },
         method: 'DELETE',
       })
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -59,8 +56,7 @@ export const useEventStore = defineStore('eventStore', () => {
         const url = URL.createObjectURL(blob)
         window.open(url, '_blank')
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -77,8 +73,7 @@ export const useEventStore = defineStore('eventStore', () => {
 
       // @ts-expect-error .................
       events.value = data.value?.data || null
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -95,8 +90,7 @@ export const useEventStore = defineStore('eventStore', () => {
 
       // @ts-expect-error .................
       events.value = data.value?.data || null
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -119,8 +113,7 @@ export const useEventStore = defineStore('eventStore', () => {
 
       // @ts-expect-error .................
       events.value = data.value?.data || null
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -135,8 +128,7 @@ export const useEventStore = defineStore('eventStore', () => {
 
       // @ts-expect-error .................
       singleEvent.value = data.value?.data || null
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }

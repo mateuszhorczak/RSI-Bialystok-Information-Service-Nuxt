@@ -2,7 +2,8 @@
 const currentYear = new Date().getFullYear()
 
 const lightText = 'font-light text-sm text-black dark:text-white leading-tight'
-const boldText = 'font-bold text-sm text-black dark:text-white leading-tight mx-1'
+const boldText =
+  'font-bold text-sm text-black dark:text-white leading-tight mx-1'
 </script>
 
 <template>

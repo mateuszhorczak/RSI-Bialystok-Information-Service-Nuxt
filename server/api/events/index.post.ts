@@ -20,8 +20,7 @@ export default defineEventHandler(async (event) => {
       dateCreation: new Date().toISOString(),
     }
     await db.insert(events).values(newEvent)
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Error processing request:', error)
     throw createError({
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,

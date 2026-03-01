@@ -26,8 +26,7 @@ export default defineEventHandler(async (event) => {
   try {
     const db = openConnection()
     await db.update(events).set(eventToUpdate).where(eq(events.id, idNum))
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Error processing request:', error)
     throw createError({
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,

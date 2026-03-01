@@ -39,14 +39,14 @@ function checkStrength(str: string) {
     },
   ]
 
-  return requirements.map(req => ({
+  return requirements.map((req) => ({
     met: req.regex.test(str),
     text: req.text,
   }))
 }
 
 const strength = computed(() => checkStrength(model.value))
-const score = computed(() => strength.value.filter(req => req.met).length)
+const score = computed(() => strength.value.filter((req) => req.met).length)
 
 const PASSWORD_STRENGTH_COLOR = {
   [PasswordStrength.None]: 'neutral',

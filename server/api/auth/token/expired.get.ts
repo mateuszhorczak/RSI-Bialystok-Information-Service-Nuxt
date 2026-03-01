@@ -8,8 +8,7 @@ export default defineEventHandler(async (event) => {
       const isExpired = isTokenExpired(query.token as string)
       return { data: isExpired }
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Error processing request:', error)
   }
 })
