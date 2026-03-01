@@ -8,12 +8,12 @@ const auth = useAuthStore()
     :toggle="{
       color: 'primary',
       variant: 'subtle',
-      class: 'rounded-full'
+      class: 'rounded-full',
     }"
   >
     <template #title>
       <div />
-<!--      <AtomsLogo class="h-6 w-auto" />-->
+      <!--      <AtomsLogo class="h-6 w-auto" /> -->
     </template>
 
     <AtomsNavigation />
@@ -24,7 +24,10 @@ const auth = useAuthStore()
     </template>
 
     <template #body>
-      <AtomsNavigation orientation="vertical" class="-mx-2.5" />
+      <AtomsNavigation
+        orientation="vertical"
+        class="-mx-2.5"
+      />
     </template>
   </UHeader>
 </template>

@@ -55,7 +55,8 @@ export default defineEventHandler(async (event) => {
       success: true,
       data: userWithoutPassword,
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Registration error:', error)
 
     // @ts-expect-error type error silence

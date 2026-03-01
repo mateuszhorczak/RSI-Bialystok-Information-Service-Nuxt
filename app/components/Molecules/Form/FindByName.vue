@@ -26,13 +26,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField
+    <AtomsInput
+      v-model="state.name"
+      icon="i-mdi-event"
+      placeholder="Wpisz nazwę wydarzenia"
+      variant="subtle"
       label="Nazwa wydarzenia"
       name="event-name"
-    >
-      <UInput v-model="state.name" />
-    </UFormField>
-
+    />
     <AtomsButton
       icon="i-mdi-calendar-search"
       label="Wyszukaj"

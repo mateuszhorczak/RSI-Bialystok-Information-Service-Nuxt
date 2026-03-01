@@ -6,15 +6,24 @@ import type { BaseEvent } from '#shared/types/event' // import prevent Unresolva
 
 const props = defineProps<BaseEvent>()
 
+const MIN_STRING = 2
+
 const eventStore = useEventStore()
 
+const newDate = new Date()
 const [year, month, day]: number[] = props.date.split('-').map(Number)
-const date = shallowRef(new CalendarDate(year, month, day))
+const date = shallowRef(
+  new CalendarDate(
+    year ?? newDate.getFullYear(),
+    month ?? newDate.getMonth() + 1,
+    day ?? newDate.getDay(),
+  ),
+)
 
 const schema = z.object({
-  name: z.string().trim().min(2),
-  type: z.string().trim().min(2),
-  description: z.string().trim().min(2),
+  name: z.string().trim().min(MIN_STRING),
+  type: z.string().trim().min(MIN_STRING),
+  description: z.string().trim().min(MIN_STRING),
 })
 
 type Schema = z.output<typeof schema>
@@ -58,39 +67,40 @@ const deleteEvent = async (id: number) => {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField
+    <AtomsInput
+      v-model="state.name"
+      icon="i-mdi-event"
+      placeholder="Wpisz nazwę wydarzenia"
+      variant="subtle"
       label="Nazwa eventu"
       name="event-name"
-    >
-      <UInput
-        v-model="state.name"
-      />
-    </UFormField>
+    />
 
-    <UFormField
+    <AtomsInput
+      v-model="state.type"
+      icon="i-mdi-event"
+      placeholder="Wpisz typ wydarzenia"
+      variant="subtle"
       label="Typ eventu"
       name="event-type"
-    >
-      <UInput
-        v-model="state.type"
-      />
-    </UFormField>
+    />
 
-    <UFormField
+    <AtomsInput
+      v-model="state.description"
+      icon="i-mdi-event"
+      placeholder="Wpisz opis wydarzenia"
+      variant="subtle"
       label="Opis"
       name="event-description"
-    >
-      <UInput
-        v-model="state.description"
-      />
-    </UFormField>
+    />
 
-    <UFormField
+    <AtomsInputCalendar
+      v-model:date="date"
       label="Data"
       name="event-date"
-    >
-      <AtomsButtonCalendar v-model:date="date" />
-    </UFormField>
+      icon="i-mdi-calendar"
+    />
+
     <AtomsButton
       icon="i-mdi-calendar-edit"
       label="Edytuj"

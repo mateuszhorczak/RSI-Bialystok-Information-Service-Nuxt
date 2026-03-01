@@ -2,11 +2,22 @@
 import type { FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 
+const MIN_YEAR = 2000
+const MAX_YEAR = 2100
+const MIN_WEEK = 1
+const MAX_WEEK = 53
+
 const eventStore = useEventStore()
 
 const schema = z.object({
-  week: z.number(),
-  year: z.number(),
+  week: z
+    .number({ message: 'nieprawidłowa wartość' })
+    .min(MIN_WEEK, { message: 'nieprawidłowa wartość' })
+    .max(MAX_WEEK, { message: 'nieprawidłowa wartość' }),
+  year: z
+    .number({ message: 'nieprawidłowa wartość' })
+    .min(MIN_YEAR, { message: 'nieprawidłowa wartość' })
+    .max(MAX_YEAR, { message: 'nieprawidłowa wartość' }),
 })
 
 type Schema = z.output<typeof schema>
@@ -28,27 +39,27 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField
+    <AtomsInputNumber
+      v-model="state.week"
+      icon="i-mdi-event"
+      placeholder="22"
+      variant="subtle"
       label="Tydzień roku"
       name="event-week"
-    >
-      <UInput
-        v-model="state.week"
-        type="number"
-        placeholder="22"
-      />
-    </UFormField>
+      :min="MIN_WEEK"
+      :max="MAX_WEEK"
+    />
 
-    <UFormField
+    <AtomsInputNumber
+      v-model="state.year"
+      icon="i-mdi-event"
+      placeholder="2025"
+      variant="subtle"
       label="Rok"
       name="event-year"
-    >
-      <UInput
-        v-model="state.year"
-        type="number"
-        placeholder="2025"
-      />
-    </UFormField>
+      :min="MIN_YEAR"
+      :max="MAX_YEAR"
+    />
 
     <AtomsButton
       icon="i-mdi-calendar-search"
@@ -56,7 +67,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       size="lg"
       type="submit"
       variant="solid"
-
     />
   </UForm>
 </template>

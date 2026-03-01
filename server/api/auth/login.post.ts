@@ -41,7 +41,8 @@ export default defineEventHandler(async (event) => {
       token: generateJwtToken(event, userWithoutPassword),
       user: userWithoutPassword,
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Login error:', error)
 
     // @ts-expect-error type error silence

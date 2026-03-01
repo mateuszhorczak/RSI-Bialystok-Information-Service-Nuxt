@@ -13,14 +13,22 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const model = defineModel<string>('val', { default: '' })
+const model = defineModel<string>({ default: '' })
 </script>
 
 <template>
-  <UFormField :label="props.label" :help="props.help" :name="props.name">
+  <UFormField
+    :label="props.label"
+    :help="props.help"
+    :name="props.name"
+  >
     <UInput
-      v-model="model" :icon="props.icon" :placeholder="props.placeholder" :variant="props.variant"
-      class="w-full" :disabled="props.disabled"
+      v-model="model"
+      :icon="props.icon"
+      :placeholder="props.placeholder"
+      :variant="props.variant"
+      :disabled="props.disabled"
+      class="w-full"
     />
   </UFormField>
 </template>

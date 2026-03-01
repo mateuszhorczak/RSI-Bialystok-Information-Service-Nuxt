@@ -80,13 +80,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       name="event-description"
     />
 
-    <AtomsInput
+    <AtomsInputCalendar
       v-model:date="date"
-      icon="i-mdi-event"
-      placeholder="Wpisz datę wydarzenia"
-      variant="subtle"
       label="Data"
       name="event-date"
+      icon="i-mdi-calendar"
     />
 
     <AtomsButton

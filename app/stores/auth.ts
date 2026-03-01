@@ -10,7 +10,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const login = async (userAuth: UserAuthentication) => {
     try {
-      const data = await $fetch<{ token: string; user: User }>(
+      const data = await $fetch<{ token: string, user: User }>(
         '/api/auth/login',
         {
           method: 'POST',
@@ -22,7 +22,8 @@ export const useAuthStore = defineStore('auth', () => {
       user.value = data.user
 
       return { success: true, data }
-    } catch (error) {
+    }
+    catch (error) {
       return {
         success: false,
         // @ts-expect-error type error silence
@@ -42,7 +43,8 @@ export const useAuthStore = defineStore('auth', () => {
         success: true,
         data: response.data,
       }
-    } catch (error) {
+    }
+    catch (error) {
       return {
         success: false,
         // @ts-expect-error type error silence

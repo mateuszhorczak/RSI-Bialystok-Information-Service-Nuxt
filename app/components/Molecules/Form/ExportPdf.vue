@@ -2,6 +2,11 @@
 import type { FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 
+const JANUARY = 1
+const DECEMBER = 12
+const MIN_YEAR = 2000
+const MAX_YEAR = 2100
+
 const eventStore = useEventStore()
 
 const schema = z.object({
@@ -28,27 +33,27 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField
+    <AtomsInputNumber
+      v-model="state.month"
+      icon="i-mdi-event"
+      placeholder="2"
+      variant="subtle"
       label="Miesiąc"
       name="event-month"
-    >
-      <UInput
-        v-model="state.month"
-        type="number"
-        placeholder="2"
-      />
-    </UFormField>
+      :min="JANUARY"
+      :max="DECEMBER"
+    />
 
-    <UFormField
+    <AtomsInputNumber
+      v-model="state.year"
+      icon="i-mdi-event"
+      placeholder="2025"
+      variant="subtle"
       label="Rok"
       name="event-year"
-    >
-      <UInput
-        v-model="state.year"
-        type="number"
-        placeholder="2025"
-      />
-    </UFormField>
+      :min="MIN_YEAR"
+      :max="MAX_YEAR"
+    />
 
     <AtomsButton
       icon="i-mdi-file-export"

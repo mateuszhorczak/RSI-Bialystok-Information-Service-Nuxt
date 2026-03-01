@@ -19,14 +19,22 @@ async function onSubmit() {
 
 <template>
   <UFieldGroup>
-    <AtomsButtonCalendar v-model:date="date" />
-    <AtomsButton
-      icon="i-mdi-calendar-search"
-      label="Wyszukaj"
-      size="lg"
-      type="button"
-      variant="solid"
-      @click="onSubmit"
-    />
+    <AtomsInputCalendar
+      v-model:date="date"
+      label="Data"
+      name="event-date"
+      icon="i-mdi-calendar"
+    >
+      <template #button-in-group>
+        <AtomsButton
+          icon="i-mdi-calendar-search"
+          label="Wyszukaj"
+          size="lg"
+          type="button"
+          variant="solid"
+          @click="onSubmit"
+        />
+      </template>
+    </AtomsInputCalendar>
   </UFieldGroup>
 </template>

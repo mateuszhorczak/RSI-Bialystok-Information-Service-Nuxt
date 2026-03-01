@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
       {
         method: 'GET',
         query: { token: authStore.token },
-        // @ts-expect-error
+        // @ts-expect-error transform type silence
         transform: ({ data }) => data,
       },
     )

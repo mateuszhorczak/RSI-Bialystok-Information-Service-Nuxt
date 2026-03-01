@@ -54,7 +54,8 @@ export default defineEventHandler(async (event) => {
         pattern: `%${name}%`,
       },
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error processing request:', error)
     throw createError({
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,

@@ -49,7 +49,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         icon: 'i-mdi-check-circle',
       })
       await router.push('/')
-    } else if (error) {
+    }
+    else if (error) {
       toast.add({
         title: 'Logowanie zakończone niepowodzeniem',
         description: error,
@@ -57,14 +58,17 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         icon: 'i-mdi-exclamation-thick',
       })
     }
-  } catch (error) {
+  }
+  catch (error) {
     toast.add({
       title: 'Błąd logowania',
       description: 'Wystąpił nieoczekiwany błąd',
       color: 'error',
       icon: 'i-mdi-exclamation-thick',
     })
-  } finally {
+    console.error(error)
+  }
+  finally {
     isSubmitting.value = false
   }
 }
@@ -77,26 +81,23 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField
+    <AtomsInput
+      v-model="state.username"
+      icon="i-mdi-account"
+      placeholder="Wpisz nazwę użytkownika"
+      variant="subtle"
       label="Nazwa użytkownika"
       name="username"
-    >
-      <UInput
-        v-model="state.username"
-        class="w-full"
-      />
-    </UFormField>
+    />
 
-    <UFormField
+    <AtomsInputPassword
+      v-model="state.password"
+      icon="i-mdi-password"
+      placeholder="Wpisz hasło"
+      variant="subtle"
       label="Hasło"
       name="password"
-    >
-      <UInput
-        v-model="state.password"
-        type="password"
-        class="w-full"
-      />
-    </UFormField>
+    />
 
     <AtomsButton
       icon="i-mdi-account-arrow-right"

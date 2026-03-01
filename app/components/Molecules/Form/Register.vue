@@ -27,11 +27,11 @@ const schema = z
         MIN_PASSWORD,
         `Hasło musi składać się z co najmniej ${MIN_PASSWORD} znaków`,
       ),
-    password2: z.string({ message: 'Wymagane' }).trim().nonempty(),
+    passwordRepeated: z.string({ message: 'Wymagane' }).trim().nonempty(),
   })
-  .refine((data) => data.password === data.password2, {
+  .refine(data => data.password === data.passwordRepeated, {
     message: 'Hasła nie są identyczne',
-    path: ['password2'],
+    path: ['passwordRepeated'],
   })
 
 type Schema = z.output<typeof schema>
@@ -39,7 +39,7 @@ type Schema = z.output<typeof schema>
 const state = reactive<Partial<Schema>>({
   username: undefined,
   password: undefined,
-  password2: undefined,
+  passwordRepeated: undefined,
   email: undefined,
 })
 
@@ -60,7 +60,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         icon: 'i-mdi-check-circle-outline',
       })
       await router.push('/login')
-    } else if (error) {
+    }
+    else if (error) {
       toast.add({
         title: 'Rejestracja zakończona niepowodzeniem',
         description: error,
@@ -68,14 +69,17 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         icon: 'i-mdi-exclamation-thick',
       })
     }
-  } catch (error) {
+  }
+  catch (error) {
     toast.add({
       title: 'Błąd rejestracji',
       description: 'Wystąpił nieoczekiwany błąd',
       color: 'error',
       icon: 'i-mdi-exclamation-thick',
     })
-  } finally {
+    console.error(error)
+  }
+  finally {
     isSubmitting.value = false
   }
 }
@@ -88,47 +92,41 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormField
+    <AtomsInput
+      v-model="state.email"
+      icon="i-mdi-event"
+      placeholder="Wpisz opis wydarzenia"
+      variant="subtle"
       label="Email"
       name="email"
-    >
-      <UInput
-        v-model="state.email"
-        class="w-full"
-      />
-    </UFormField>
+    />
 
-    <UFormField
+    <AtomsInput
+      v-model="state.username"
+      icon="i-mdi-event"
+      placeholder="Wpisz opis wydarzenia"
+      variant="subtle"
       label="Nazwa użytkownika"
       name="username"
-    >
-      <UInput
-        v-model="state.username"
-        class="w-full"
-      />
-    </UFormField>
+    />
 
-    <UFormField
+    <AtomsInputPasswordValidation
+      v-model="state.password"
+      icon="i-mdi-password"
+      placeholder="Wpisz ponownie hasło"
+      variant="subtle"
       label="Hasło"
       name="password"
-    >
-      <UInput
-        v-model="state.password"
-        type="password"
-        class="w-full"
-      />
-    </UFormField>
+    />
 
-    <UFormField
+    <AtomsInputPassword
+      v-model="state.passwordRepeated"
+      icon="i-mdi-password"
+      placeholder="Wpisz hasło"
+      variant="subtle"
       label="Powtórz hasło"
-      name="password2"
-    >
-      <UInput
-        v-model="state.password2"
-        type="password"
-        class="w-full"
-      />
-    </UFormField>
+      name="passwordRepeated"
+    />
 
     <AtomsButton
       icon="i-mdi-account-arrow-up"
