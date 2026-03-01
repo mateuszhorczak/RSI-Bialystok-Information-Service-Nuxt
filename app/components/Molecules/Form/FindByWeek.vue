@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
+import { eventSelectWeekYearSchema } from '#server/db/schema'
 
 const MIN_YEAR = 2000
 const MAX_YEAR = 2100
@@ -9,17 +10,7 @@ const MAX_WEEK = 53
 
 const eventStore = useEventStore()
 
-const schema = z.object({
-  week: z
-    .number({ message: 'nieprawidłowa wartość' })
-    .min(MIN_WEEK, { message: 'nieprawidłowa wartość' })
-    .max(MAX_WEEK, { message: 'nieprawidłowa wartość' }),
-  year: z
-    .number({ message: 'nieprawidłowa wartość' })
-    .min(MIN_YEAR, { message: 'nieprawidłowa wartość' })
-    .max(MAX_YEAR, { message: 'nieprawidłowa wartość' }),
-})
-
+const schema = eventSelectWeekYearSchema
 type Schema = z.output<typeof schema>
 
 const state = reactive<Partial<Schema>>({
@@ -28,6 +19,7 @@ const state = reactive<Partial<Schema>>({
 })
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
+  if (!(event.data.week && event.data.year)) return
   await eventStore.getEventsByWeek(event.data.week, event.data.year)
 }
 </script>

@@ -2,13 +2,13 @@
 import { CalendarDate } from '@internationalized/date'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
+import { eventUpdateSchema } from '#server/db/schema'
 import type { BaseEvent } from '#shared/types/event' // import prevent Unresolvable type reference or unsupported built-in utility type bug
 
 const props = defineProps<BaseEvent>()
 
-const MIN_STRING = 2
-
 const eventStore = useEventStore()
+const router = useRouter()
 
 const newDate = new Date()
 const [year, month, day]: number[] = props.date.split('-').map(Number)
@@ -20,11 +20,7 @@ const date = shallowRef(
   ),
 )
 
-const schema = z.object({
-  name: z.string().trim().min(MIN_STRING),
-  type: z.string().trim().min(MIN_STRING),
-  description: z.string().trim().min(MIN_STRING),
-})
+const schema = eventUpdateSchema
 
 type Schema = z.output<typeof schema>
 
@@ -49,13 +45,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
 
   await eventStore.updateEvent(newEvent)
-  const router = useRouter()
   await router.push('/events')
 }
 
 const deleteEvent = async (id: number) => {
   await eventStore.deleteEvent(id)
-  const router = useRouter()
   await router.push('/events')
 }
 </script>
@@ -73,7 +67,7 @@ const deleteEvent = async (id: number) => {
       placeholder="Wpisz nazwę wydarzenia"
       variant="subtle"
       label="Nazwa eventu"
-      name="event-name"
+      name="name"
     />
 
     <AtomsInput
@@ -82,7 +76,7 @@ const deleteEvent = async (id: number) => {
       placeholder="Wpisz typ wydarzenia"
       variant="subtle"
       label="Typ eventu"
-      name="event-type"
+      name="type"
     />
 
     <AtomsInput
@@ -91,13 +85,13 @@ const deleteEvent = async (id: number) => {
       placeholder="Wpisz opis wydarzenia"
       variant="subtle"
       label="Opis"
-      name="event-description"
+      name="description"
     />
 
     <AtomsInputCalendar
       v-model:date="date"
       label="Data"
-      name="event-date"
+      name="date"
       icon="i-mdi-calendar"
     />
 

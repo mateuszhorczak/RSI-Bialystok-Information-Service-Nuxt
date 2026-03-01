@@ -2,6 +2,7 @@
 import { CalendarDate } from '@internationalized/date'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
+import { eventInsertSchema } from '#server/db/schema'
 
 const eventStore = useEventStore()
 
@@ -14,12 +15,7 @@ const date = shallowRef(
   ),
 )
 
-const schema = z.object({
-  name: z.string().trim().min(2),
-  type: z.string().trim().min(2),
-  description: z.string().trim().min(2),
-})
-
+const schema = eventInsertSchema
 type Schema = z.output<typeof schema>
 
 const state = reactive<Partial<Schema>>({

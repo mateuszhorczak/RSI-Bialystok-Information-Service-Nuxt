@@ -5,7 +5,7 @@ const props = defineProps<BaseEvent>()
 </script>
 
 <template>
-  <div class="shadow-md p-4 space-y-1 rounded-md mx-4 my-4">
+  <UCard class="m-2 p-2 bg-gray-50 hover:bg-gray-50/10 dark:bg-neutral-800 dark:hover:bg-gray-50/10 transition duration-300 ease-in-out hover:scale-105">
     <AtomsSubHeading>
       {{ props.name }}
     </AtomsSubHeading>
@@ -18,5 +18,5 @@ const props = defineProps<BaseEvent>()
     <AtomsParagraph>
       opis: {{ props.description }}
     </AtomsParagraph>
-  </div>
+  </UCard>
 </template>

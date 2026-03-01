@@ -1,34 +1,16 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
-
-const MIN_USERNAME = 3
-const MIN_PASSWORD = 8
+import { userInsertSchema } from '#server/db/schema'
 
 const authStore = useAuthStore()
 const toast = useToast()
 const router = useRouter()
 const isSubmitting = ref(false)
 
-const schema = z
-  .object({
-    username: z
-      .string({ message: 'Wymagane' })
-      .trim()
-      .min(
-        MIN_USERNAME,
-        `Nazwa użytkownika musi składać się z co najmniej ${MIN_USERNAME} liter`,
-      ),
-    email: z.email({ message: 'Nieprawidłowy format email' }).trim(),
-    password: z
-      .string({ message: 'Wymagane' })
-      .trim()
-      .min(
-        MIN_PASSWORD,
-        `Hasło musi składać się z co najmniej ${MIN_PASSWORD} znaków`,
-      ),
-    passwordRepeated: z.string({ message: 'Wymagane' }).trim().nonempty(),
-  })
+const schema = userInsertSchema.extend({
+  passwordRepeated: z.string({ message: 'Wymagane' }).trim().nonempty('Wymagane'),
+})
   .refine((data) => data.password === data.passwordRepeated, {
     message: 'Hasła nie są identyczne',
     path: ['passwordRepeated'],
