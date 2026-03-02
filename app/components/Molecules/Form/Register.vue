@@ -73,8 +73,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   >
     <AtomsInput
       v-model="state.email"
-      icon="i-mdi-event"
-      placeholder="Wpisz opis wydarzenia"
+      icon="i-mdi-email"
+      placeholder="Wpisz swój adres email"
       variant="subtle"
       label="Email"
       name="email"
@@ -82,8 +82,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     <AtomsInput
       v-model="state.username"
-      icon="i-mdi-event"
-      placeholder="Wpisz opis wydarzenia"
+      icon="i-mdi-account"
+      placeholder="Wpisz nazwę użytkownika"
       variant="subtle"
       label="Nazwa użytkownika"
       name="username"

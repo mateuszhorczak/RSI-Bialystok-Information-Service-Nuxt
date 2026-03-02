@@ -36,10 +36,10 @@ export const events = sqliteTable('events', {
   type: text('type').notNull(),
   date: text('date').notNull(),
   description: text('description').notNull(),
-  dateCreation: text('date_creation').notNull(),
-  week: integer('week').notNull(),
-  month: integer('month').notNull(),
-  year: integer('year').notNull(),
+  dateCreation: text('date_creation'),
+  week: integer('week'),
+  month: integer('month'),
+  year: integer('year'),
 })
 
 export const eventsRelations = relations(events, ({ one }) => ({

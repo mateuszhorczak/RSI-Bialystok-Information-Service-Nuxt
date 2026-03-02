@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { CalendarDate } from '@internationalized/date'
-import type { FormSubmitEvent } from '@nuxt/ui'
+import type { FormError, FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
 import { eventInsertSchema } from '#server/db/schema'
 
 const eventStore = useEventStore()
+const auth = useAuthStore()
 
 const currentDate = new Date()
 const date = shallowRef(
@@ -24,9 +25,20 @@ const state = reactive<Partial<Schema>>({
   description: undefined,
 })
 
+const validate: (state: Partial<Schema>) => FormError[] = (state) => {
+  if (!auth.user) return []
+  const { error } = schema.safeParse({
+    ...state,
+    userId: auth.user.id,
+    date: date.value.toString()
+  })
+  return handleValidationError(error)
+}
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
+  if (!auth.user) return
   const newEvent = {
-    userId: 1,
+    userId: auth.user.id,
     name: event.data.name,
     type: event.data.type,
     date: date.value.toString(),
@@ -44,7 +56,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <UForm
-    :schema="schema"
+    :validate="validate"
     :state="state"
     class="space-y-4"
     @submit="onSubmit"
@@ -55,7 +67,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       placeholder="Wpisz nazwę wydarzenia"
       variant="subtle"
       label="Nazwa wydarzenia"
-      name="event-name"
+      name="name"
     />
 
     <AtomsInput
@@ -64,7 +76,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       placeholder="Wpisz typ wydarzenia"
       variant="subtle"
       label="Typ eventu"
-      name="event-type"
+      name="type"
     />
 
     <AtomsInput
@@ -73,7 +85,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       placeholder="Wpisz opis wydarzenia"
       variant="subtle"
       label="Opis"
-      name="event-description"
+      name="description"
     />
 
     <AtomsInputCalendar

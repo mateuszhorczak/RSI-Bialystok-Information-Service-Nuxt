@@ -18,7 +18,7 @@ const MAX_PASSWORD_LENGTH = 50
 
 
 const validation = {
-  email: z.email('Wymagane').trim()
+  email: z.email('Nieprawidłowy email').trim()
   .min(MIN_EMAIL_LENGTH, { message: 'Wymagane' })
   .max(MAX_EMAIL_LENGTH, { message: 'Podano za długą wartość' }),
   username: z.string('Wymagane').trim()
@@ -40,7 +40,7 @@ export const users = sqliteTable('users', {
   email: text('email').notNull().unique(),
   username: text('username').notNull().unique(),
   password: text('password').notNull(),
-  dateCreation: text('date_creation').notNull(),
+  dateCreation: text('date_creation'),
 })
 
 export const userSelectSchema = createSelectSchema(users)

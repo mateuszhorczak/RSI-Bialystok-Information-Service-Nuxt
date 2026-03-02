@@ -36,7 +36,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     <AtomsInputNumber
       v-model="state.month"
       icon="i-mdi-event"
-      placeholder="2"
+      placeholder="5"
       variant="subtle"
       label="Miesiąc"
       name="event-month"
