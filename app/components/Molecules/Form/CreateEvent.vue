@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CalendarDate } from '@internationalized/date'
 import type { FormError, FormSubmitEvent } from '@nuxt/ui'
-import * as z from 'zod'
+import type * as z from 'zod'
 import { eventInsertSchema } from '#server/db/schema'
 
 const eventStore = useEventStore()
@@ -30,7 +30,7 @@ const validate: (state: Partial<Schema>) => FormError[] = (state) => {
   const { error } = schema.safeParse({
     ...state,
     userId: auth.user.id,
-    date: date.value.toString()
+    date: date.value.toString(),
   })
   return handleValidationError(error)
 }

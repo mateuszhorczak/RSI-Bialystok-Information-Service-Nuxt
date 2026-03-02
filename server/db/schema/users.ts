@@ -1,6 +1,5 @@
 import { relations } from 'drizzle-orm'
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
-import { events } from './'
 import {
   createInsertSchema,
   createSelectSchema,
@@ -8,6 +7,7 @@ import {
 } from 'drizzle-zod'
 import { z } from 'zod/v4'
 import { omit } from '../../../shared/utils/omit'
+import { events } from './'
 
 const MIN_USERNAME_LENGTH = 3
 const MAX_USERNAME_LENGTH = 50
@@ -16,14 +16,17 @@ const MAX_EMAIL_LENGTH = 50
 const MIN_PASSWORD_LENGTH = 8
 const MAX_PASSWORD_LENGTH = 50
 
-
 const validation = {
-  email: z.email('Nieprawidłowy email').trim()
-  .min(MIN_EMAIL_LENGTH, { message: 'Wymagane' })
-  .max(MAX_EMAIL_LENGTH, { message: 'Podano za długą wartość' }),
-  username: z.string('Wymagane').trim()
-  .min(MIN_USERNAME_LENGTH, { message: 'Podano za krótką wartość' })
-  .max(MAX_USERNAME_LENGTH, { message: 'Podano za długą wartość' }),
+  email: z
+    .email('Nieprawidłowy email')
+    .trim()
+    .min(MIN_EMAIL_LENGTH, { message: 'Wymagane' })
+    .max(MAX_EMAIL_LENGTH, { message: 'Podano za długą wartość' }),
+  username: z
+    .string('Wymagane')
+    .trim()
+    .min(MIN_USERNAME_LENGTH, { message: 'Podano za krótką wartość' })
+    .max(MAX_USERNAME_LENGTH, { message: 'Podano za długą wartość' }),
   password: z
     .string({ error: 'Wymagane' })
     .trim()
@@ -49,7 +52,6 @@ export const userUpdateSchema = createUpdateSchema(
   users,
   omit(validation, ['password']),
 )
-
 
 export const usersRelations = relations(users, ({ many }) => ({
   events: many(events),

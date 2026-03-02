@@ -8,9 +8,13 @@ const toast = useToast()
 const router = useRouter()
 const isSubmitting = ref(false)
 
-const schema = userInsertSchema.extend({
-  passwordRepeated: z.string({ message: 'Wymagane' }).trim().nonempty('Wymagane'),
-})
+const schema = userInsertSchema
+  .extend({
+    passwordRepeated: z
+      .string({ message: 'Wymagane' })
+      .trim()
+      .nonempty('Wymagane'),
+  })
   .refine((data) => data.password === data.passwordRepeated, {
     message: 'Hasła nie są identyczne',
     path: ['passwordRepeated'],

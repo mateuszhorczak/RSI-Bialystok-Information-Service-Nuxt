@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
-import * as z from 'zod'
+import type * as z from 'zod'
 import { eventSelectWeekYearSchema } from '#server/db/schema'
 
 const MIN_YEAR = 2000

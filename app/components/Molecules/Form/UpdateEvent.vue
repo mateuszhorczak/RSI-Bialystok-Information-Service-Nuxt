@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CalendarDate } from '@internationalized/date'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import * as z from 'zod'
+import type * as z from 'zod'
 import { eventUpdateSchema } from '#server/db/schema'
 import type { BaseEvent } from '#shared/types/event' // import prevent Unresolvable type reference or unsupported built-in utility type bug
 
